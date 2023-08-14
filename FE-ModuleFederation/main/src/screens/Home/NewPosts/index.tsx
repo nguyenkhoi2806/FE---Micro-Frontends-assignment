@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { mountRemoteComponent } from '@/utils/loadComponent';
-import { useNavigate } from 'react-router-dom';
+import { mountRemoteComponent } from "@/utils/loadComponent";
+import { useNavigate } from "react-router-dom";
 
 const NewPosts = () => {
   const navigate = useNavigate();
   const newPostsProps = {
-    navigate
+    navigate,
   };
 
   return (
@@ -18,7 +18,11 @@ const NewPosts = () => {
           </div>
         </div>
       </div>
-      {mountRemoteComponent({ module: 'blog', component: 'PostList', props: newPostsProps })}
+      {mountRemoteComponent({
+        module: "blog",
+        component: "PostList",
+        props: newPostsProps,
+      })}
     </section>
   );
 };

@@ -1,9 +1,9 @@
-import Axios, {AxiosRequestConfig} from "axios";
-import {useNotificationStore} from "@dafcoe/vue-notification";
+import Axios, { AxiosRequestConfig } from "axios";
+import { useNotificationStore } from "@dafcoe/vue-notification";
 
 const configInterceptor = () => {
   const axios = Axios.create({
-    baseURL: `http://localhost:5000/api/rest`,
+    baseURL: `http://localhost:5300/api/rest`,
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
@@ -49,53 +49,60 @@ const configInterceptor = () => {
 export const axiosConfig = configInterceptor();
 
 const ENDPOINT = {
-  ALL_POST: 'getAllPost',
-  CATEGORIES: 'post/categories',
-  SEARCH_POST: 'searchPost',
-  POST_DETAIL: 'getPostDetail'
-}
+  ALL_POST: "getAllPost",
+  CATEGORIES: "post/categories",
+  SEARCH_POST: "searchPost",
+  POST_DETAIL: "getPostDetail",
+};
 
 const BlogService = {
   getPosts: async (data: any) => {
-    return axiosConfig.get(`${ENDPOINT.ALL_POST}/${data.limit}/${data.offset}`)
+    return axiosConfig
+      .get(`${ENDPOINT.ALL_POST}/${data.limit}/${data.offset}`)
       .then((res) => {
         return res;
-      }).catch(err => {
-        console.log(err)
+      })
+      .catch((err) => {
+        console.log(err);
       });
   },
   getCategories: async () => {
-    const response = axiosConfig.get(ENDPOINT.CATEGORIES)
-    .then(res => {
-      return res;
-    }).catch(err => {
-      console.log(err)
-    });
+    const response = axiosConfig
+      .get(ENDPOINT.CATEGORIES)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return response;
   },
   searchPost: async (params: any) => {
-    const response = axiosConfig.post(ENDPOINT.SEARCH_POST, {
+    const response = axiosConfig
+      .post(ENDPOINT.SEARCH_POST, {
         search: params.value,
         limit: params.limit,
-        offset: params.offset
-    })
-    .then(res => {
-      return res;
-    }).catch(err => {
-      console.log(err)
-    });
+        offset: params.offset,
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return response;
   },
   getPostDetail: async (id: string) => {
-    const response = axiosConfig.get(`${ENDPOINT.POST_DETAIL}/${id}`)
-    .then(res => {
-      return res;
-    }).catch(err => {
-      console.log(err)
-    })
+    const response = axiosConfig
+      .get(`${ENDPOINT.POST_DETAIL}/${id}`)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     return response;
   },
-  
 };
 
 export { BlogService };
