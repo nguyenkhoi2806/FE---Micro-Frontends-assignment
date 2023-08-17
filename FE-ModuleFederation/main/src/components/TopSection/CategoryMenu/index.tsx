@@ -1,9 +1,13 @@
-import React from 'react';
+import { mountRemoteComponent } from "@/utils/loadComponent";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CategoryMemu = () => {
   const onMenuClick = () => {
-    $('.hero__categories ul').slideToggle(400);
+    $(".hero__categories ul").slideToggle(400);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="hero__categories">
@@ -11,19 +15,13 @@ const CategoryMemu = () => {
         <i className="fa fa-bars" />
         <span>All Departments</span>
       </div>
-      <ul>
-        <li><a href="#">Fresh Meat</a></li>
-        <li><a href="#">Vegetables</a></li>
-        <li><a href="#">Fruit & Nut Gifts</a></li>
-        <li><a href="#">Fresh Berries</a></li>
-        <li><a href="#">Ocean Foods</a></li>
-        <li><a href="#">Butter & Eggs</a></li>
-        <li><a href="#">Fastfood</a></li>
-        <li><a href="#">Fresh Onion</a></li>
-        <li><a href="#">Papayaya & Crisps</a></li>
-        <li><a href="#">Oatmeal</a></li>
-        <li><a href="#">Fresh Bananas</a></li>
-      </ul>
+      {mountRemoteComponent({
+        module: "product",
+        component: "MenuCategory",
+        props: {
+          navigate,
+        },
+      })}
     </div>
   );
 };
