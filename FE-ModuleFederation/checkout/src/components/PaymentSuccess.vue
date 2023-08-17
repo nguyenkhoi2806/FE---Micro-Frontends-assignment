@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mb-5">
     <p>
       <i class="fa fa-check-circle-o"></i>
       <span> Payment Successful! </span>

@@ -3,7 +3,12 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-3 col-md-5">
-          <Sidebar @getAllProducts="getAllProducts" @getProductsByCategory="getProductsByCategory" />
+          <Sidebar
+            @getAllProducts="getAllProducts"
+            @getProductsByCategory="getProductsByCategory"
+            :filter-item-by-price="filterItemByPrice"
+            :navigate="navigate"
+          />
         </div>
         <div class="col-lg-9 col-md-7">
           <div class="product__discount">
@@ -15,7 +20,7 @@
             </div>
           </div>
           <Filter :count="items?.length" />
-          <ProductList :data="items" />
+          <ProductList :data="items" :event-bus="eventBus" />
         </div>
       </div>
     </div>
@@ -47,9 +52,10 @@ export default defineComponent({
   },
   props: {
     navigate: {
-      type: Function
+      type: Function,
     },
-    searchParams: Object as PropType<Record<string, any>>
+    searchParams: Object as PropType<Record<string, any>>,
+    eventBus: {} as any,
   },
   data() {
     return {
@@ -71,7 +77,7 @@ export default defineComponent({
       this.items = data.product;
       this.saleItems = data.product.filter((el: IProduct) => el.discount);
     },
-    async getProductsByCategory(id: IProduct['id']) {
+    async getProductsByCategory(id: IProduct["id"]) {
       const { data } = await API.getProductsByCategory(id);
       this.items = data.category?.[0]?.products;
     },
