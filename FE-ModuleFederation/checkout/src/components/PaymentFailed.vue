@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mb-5">
     <p>
       <i class="fa fa-times-circle-o" aria-hidden="true"></i>
       <span> Payment Failed! </span>
