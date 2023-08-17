@@ -74,14 +74,16 @@ class globalStorageClass implements IGlobalStorage {
     this.removeLocalStorage("mfcart");
   }
 
-  public removeItemFromCart(item: IItemCart, token: string | null = null) {
+  public removeItemFromCart(item: IItemCart) {
     const data = this.getCartData();
-    const userId = null;
     if (!data || !data.items.length) {
       return;
     }
 
-    const findIndex = _.findIndex(data.items, (o: IItemCart) => o.id === item.id);
+    const findIndex = _.findIndex(
+      data.items,
+      (o: IItemCart) => o.id === item.id
+    );
     if (findIndex !== -1) {
       const newData = _.filter(data.items, (o) => o.id !== item.id);
       if (newData.length > 0) {

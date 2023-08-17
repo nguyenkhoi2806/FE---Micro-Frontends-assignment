@@ -6,7 +6,6 @@
           <Sidebar
             @getAllProducts="getAllProducts"
             @getProductsByCategory="getProductsByCategory"
-            :filter-item-by-price="filterItemByPrice"
             :navigate="navigate"
           />
         </div>
