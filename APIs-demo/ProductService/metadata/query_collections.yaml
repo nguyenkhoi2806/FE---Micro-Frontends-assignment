@@ -31,6 +31,7 @@
           	product(where: {is_featured:{_eq:$isFeatured}}, limit: $limit) {
           		name
           		price
+          		id
           		list_img(limit: 1) {
           			url
           		}
