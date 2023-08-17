@@ -8,12 +8,18 @@
           </div>
           <div class="featured__controls">
             <ul>
-              <li :class="{active: selectedCatalog === '*'}" data-filter="*" @click="selectedCatalog = '*'">All</li>
+              <li
+                :class="{ active: selectedCatalog === '*' }"
+                data-filter="*"
+                @click="selectedCatalog = '*'"
+              >
+                All
+              </li>
               <li
                 v-for="(item, key) in categories"
                 :key="key"
                 :data-filter="`.${key}`"
-                :class="{active: selectedCatalog === key}"
+                :class="{ active: selectedCatalog === key }"
                 @click="selectedCatalog = key"
                 class="text-capitalize"
               >
@@ -30,7 +36,7 @@
           :key="item.id"
           :class="['col-lg-3 col-md-4 col-sm-6 mix', item.category.slug]"
         >
-          <ProductCard :item="item" />
+          <ProductCard :item="item" :event-bus="eventBus" />
         </div>
       </div>
     </div>
@@ -47,32 +53,31 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Content",
   components: { ProductCard },
-  provide () {
+  provide() {
     return {
-      navigate: this.navigate
-    }
+      navigate: this.navigate,
+    };
   },
   props: {
+    eventBus: {} as any,
     navigate: {
       type: Function,
-    }
+    },
   },
   data() {
     return {
       featuredProducts: null as Array<IProduct> | null,
-      selectedCatalog: '*'
+      selectedCatalog: "*",
     };
   },
   computed: {
     categories(): any {
-      const vm: any = this
-      return vm.featuredProducts
-        ? _.groupBy(vm.featuredProducts, "category.slug")
-        : {};
+      const vm: any = this;
+      return vm.featuredProducts ? _.groupBy(vm.featuredProducts, "category.slug") : {};
     },
   },
   async mounted() {
-    const vm : any = this;
+    const vm: any = this;
     const { data } = await Api.getFeaturedProducts();
     vm.featuredProducts = data.product;
     vm.$nextTick(() => {
@@ -82,5 +87,5 @@ export default defineComponent({
       }
     });
   },
-})
+});
 </script>

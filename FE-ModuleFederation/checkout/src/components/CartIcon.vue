@@ -11,17 +11,23 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "CartIcon",
-  props: ["navigate"],
+  props: ["navigate", "eventBus"],
   setup() {
     const cartStore = useCartStore();
     const { totalItems } = storeToRefs(cartStore);
-    cartStore.load();
     return { cartStore, totalItems };
   },
   methods: {
     navigateToCart() {
       this.navigate("/shopping-cart");
     },
+  },
+  mounted() {
+    if (this.eventBus) {
+      this.eventBus.on("addCartItem", () => {
+        this.cartStore.load();
+      });
+    }
   },
 });
 </script>

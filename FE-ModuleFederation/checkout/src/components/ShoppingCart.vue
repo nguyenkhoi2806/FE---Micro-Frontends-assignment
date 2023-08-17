@@ -1,7 +1,7 @@
 <template>
   <template v-if="!cartData || !cartData.items.length">
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 text-center mt-5 mb-5">
         <h3>Your cart is empty!</h3>
       </div>
     </div>
@@ -37,7 +37,10 @@
       <div class="col-lg-12">
         <div class="shoping__cart__btns">
           <a class="primary-btn cart-btn"> CONTINUE SHOPPING </a>
-          <a class="primary-btn cart-btn cart-btn-right" @click="onUpdateLocalStorage">
+          <a
+            class="primary-btn cart-btn cart-btn-right"
+            @click="onUpdateLocalStorage"
+          >
             <span class="icon_loading" />
             UPDATE CART
           </a>
@@ -65,7 +68,9 @@
               Total <span>{{ cartData.grandTotal.toFixed(2) }}</span>
             </li>
           </ul>
-          <a class="primary-btn" @click="navigateToCheckOut"> PROCEED TO CHECKOUT </a>
+          <a class="primary-btn" @click="navigateToCheckOut">
+            PROCEED TO CHECKOUT
+          </a>
         </div>
       </div>
     </div>

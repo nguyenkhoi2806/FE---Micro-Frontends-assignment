@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 export interface IItemCart {
   id: number;
@@ -13,9 +13,8 @@ export interface ICartData {
   totalItems: number;
   subTotal: number;
   grandTotal: number;
-  items: IItemCart[]
+  items: IItemCart[];
 }
-
 
 interface IGlobalStorage {
   getCartData(): ICartData | null;
@@ -28,7 +27,7 @@ class globalStorageClass {
   }
 
   private setLocalStorage(name: string, val: string | object) {
-    if (typeof val !== 'string') {
+    if (typeof val !== "string") {
       val = JSON.stringify(val);
     }
 
@@ -40,7 +39,7 @@ class globalStorageClass {
   }
 
   public getCartData() {
-    const data = this.getLocalStorage('mfcart');
+    const data = this.getLocalStorage("mfcart");
     return data ? JSON.parse(data) : null;
   }
   public addItemToCart(item: IItemCart) {
@@ -52,15 +51,15 @@ class globalStorageClass {
         totalItems: 1,
         subTotal: item.price,
         grandTotal: item.price,
-        items: [item]
-      }
+        items: [item],
+      };
 
-      return this.setLocalStorage('mfcart', defaultData);
+      return this.setLocalStorage("mfcart", defaultData);
     }
 
     currentData.userId = userId;
     if (currentData.items.length > 0) {
-      const findIndex = _.findIndex(currentData.items,(o: IItemCart) => o.id === item.id);
+      const findIndex = _.findIndex(currentData.items, (o: IItemCart) => o.id === item.id);
       if (findIndex !== -1) {
         const checkData = currentData.items[findIndex];
         checkData.qty += item.qty;
@@ -69,7 +68,7 @@ class globalStorageClass {
         currentData.subTotal += item.price;
         currentData.grandTotal = currentData.subTotal;
 
-        return this.setLocalStorage('mfcart', currentData);
+        return this.setLocalStorage("mfcart", currentData);
       }
     }
 
@@ -77,8 +76,8 @@ class globalStorageClass {
     currentData.subTotal += item.qty * item.price;
     currentData.grandTotal = currentData.subTotal;
     currentData.items = currentData.items.concat(item);
-
-    return this.setLocalStorage('mfcart', currentData);
+    console.log(currentData);
+    return this.setLocalStorage("mfcart", currentData);
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProductDetail />
+    <ProductDetail :event-bus="eventBus" />
     <section class="related-product">
       <div class="container">
         <div class="row">
@@ -10,7 +10,7 @@
             </div>
           </div>
         </div>
-        <ProductList :column="4" :data="items" />
+        <ProductList :column="4" :data="items" :event-bus="eventBus" />
       </div>
     </section>
   </div>
@@ -37,12 +37,13 @@ export default defineComponent({
   },
   props: {
     id: {
-      type: String as IProduct['id'],
-      default: ''
+      type: String as IProduct["id"],
+      default: "",
     },
     navigate: {
-      type: Function
-    }
+      type: Function,
+    },
+    eventBus: {} as any,
   },
   data() {
     return {

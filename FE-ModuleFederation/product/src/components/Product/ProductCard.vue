@@ -1,35 +1,49 @@
 <template>
   <div class="product__discount__item product__item">
-    <div class="product__discount__item__pic set-bg"
-         :style="{backgroundImage: `url(${item.list_img?.[0].url || require('@/assets/img/default.png')})`}">
+    <div
+      class="product__discount__item__pic set-bg"
+      :style="{
+        backgroundImage: `url(${item.list_img?.[0].url || require('@/assets/img/default.png')})`,
+      }"
+    >
       <div v-if="item.discount" class="product__discount__percent">-{{ item.discount }}%</div>
       <ul class="product__item__pic__hover">
-        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-        <li><a @click="addToCart(item)"><i class="fa fa-shopping-cart"></i></a></li>
+        <li>
+          <a href="#"><i class="fa fa-heart"></i></a>
+        </li>
+        <li>
+          <a href="#"><i class="fa fa-retweet"></i></a>
+        </li>
+        <li>
+          <a @click="addToCart(item)"><i class="fa fa-shopping-cart"></i></a>
+        </li>
       </ul>
     </div>
     <div>
       <div class="product__discount__item__text">
         <span>{{ item.category?.name }}</span>
-        <h5><a @click="navigate(`/shop/${item.id}`)">{{ item.name }}</a></h5>
-        <div class="product__item__price">${{ item.price }} <span
-          v-if="item.discount">${{ item.price }}</span></div>
+        <h5>
+          <a @click="navigate(`/shop/${item.id}`)">{{ item.name }}</a>
+        </h5>
+        <div class="product__item__price">
+          ${{ item.price }} <span v-if="item.discount">${{ item.price }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import globalStorage, { IItemCart } from '@/utils/loadStorage';
+import { defineComponent } from "vue";
+import globalStorage, { IItemCart } from "@/utils/loadStorage";
 //@ts-ignore
 import { IProduct } from "@components/Product/product.type.ts";
 
 export default defineComponent({
-  name: 'ProductCard',
-  inject: ['navigate'],
+  name: "ProductCard",
+  inject: ["navigate"],
   props: {
     item: IProduct,
+    eventBus: {} as any,
   },
   methods: {
     addToCart(item: any) {
@@ -38,12 +52,19 @@ export default defineComponent({
         title: item.name,
         qty: 1,
         price: item.price,
-        img: item.list_img?.[0].url || require('@/assets/img/default.png')
-      }
+        img: item.list_img?.[0].url || require("@/assets/img/default.png"),
+      };
       globalStorage.addItemToCart(data);
-    }
-  }
-})
+      this.eventBus.emit("addCartItem");
+      this.eventBus.emit("showMessage", null, {
+        detail: {
+          serverity: "success",
+          message: "Add to cart success",
+        },
+      });
+    },
+  },
+});
 </script>
 <style scoped lang="scss">
 @import "@/assets/scss/variables";
@@ -53,9 +74,7 @@ export default defineComponent({
   min-width: 200px;
 
   &:hover {
-
     .product__discount__item__pic {
-
       .product__item__pic__hover {
         bottom: 20px;
       }
@@ -89,7 +108,7 @@ export default defineComponent({
   bottom: -50px;
   width: 100%;
   text-align: center;
-  @include transition(all, .5s);
+  @include transition(all, 0.5s);
 
   li {
     list-style: none;
@@ -101,7 +120,6 @@ export default defineComponent({
     }
 
     &:hover {
-
       a {
         background: $primary-color;
         border-color: $primary-color;
@@ -126,12 +144,12 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      @include transition(all, .5s);
+      @include transition(all, 0.5s);
 
       i {
         position: relative;
         transform: rotate(0);
-        @include transition(all, .3s);
+        @include transition(all, 0.3s);
       }
     }
   }

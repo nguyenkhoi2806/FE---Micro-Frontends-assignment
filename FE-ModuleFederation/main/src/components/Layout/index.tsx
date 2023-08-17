@@ -8,13 +8,13 @@ import Footer from "../Footer";
 
 const fallbackComponent = () => {
   return (
-    <div style={{ width: '100px', height: '100px', backgroundColor: '#cccccc' }}></div>
-  )
-}
+    <div
+      style={{ width: "100px", height: "100px", backgroundColor: "#cccccc" }}
+    ></div>
+  );
+};
 
-
-function Layout() {
-
+function Layout({ eventBus }: any) {
   const location = useLocation();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function Layout() {
         <div className="background-fade"/>
       )} */}
       <Hamburger />
-      <Header />
+      <Header eventBus={eventBus} />
       <div className="container">
         <TopSection />
         <Suspense fallback={fallbackComponent()}>

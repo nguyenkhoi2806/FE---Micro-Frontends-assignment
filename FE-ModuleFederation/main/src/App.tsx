@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LogtoProvider, LogtoConfig } from "@logto/react";
-import { mountRemoteComponent } from '@/utils/loadComponent';
+import { mountRemoteComponent } from "@/utils/loadComponent";
 
 import "jquery-ui-bundle";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -22,7 +22,7 @@ const ShoppingCart = lazy(() => import("./screens/ShoppingCart"));
 const Checkout = lazy(() => import("./screens/Checkout"));
 const PaymentFailed = lazy(() => import("./screens/PaymentFailed"));
 const PaymentSuccess = lazy(() => import("./screens/PaymentSuccess"));
-import eventBus  from 'js-event-bus';
+import eventBus from "js-event-bus";
 
 function App() {
   const config: LogtoConfig = {
@@ -30,20 +30,27 @@ function App() {
     appId: process.env.LOGTO_KEY as string,
   };
   const eventBusInit: any = new eventBus();
-  
+
   return (
     <LogtoProvider config={config}>
-      {mountRemoteComponent({ module: 'shared', component: 'SnackMessage', props: {
-        eventBus: eventBusInit,
-      }})}
+      {mountRemoteComponent({
+        module: "shared",
+        component: "SnackMessage",
+        props: {
+          eventBus: eventBusInit,
+        },
+      })}
       <Router>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+          <Route path="/" element={<Layout eventBus={eventBusInit} />}>
+            <Route index element={<Home eventBus={eventBusInit} />} />
             <Route path="/callback" element={<Auth />} />
             <Route path="/shop">
-              <Route index element={<Shop />} />
-              <Route path=":id" element={<ShopDetail />} />
+              <Route index element={<Shop eventBus={eventBusInit} />} />
+              <Route
+                path=":id"
+                element={<ShopDetail eventBus={eventBusInit} />}
+              />
             </Route>
             <Route path="/blog">
               <Route index element={<Blog />} />
@@ -51,13 +58,16 @@ function App() {
             </Route>
             <Route path="/contact" element={<Contact />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/checkout" element={<Checkout eventBus={eventBusInit}/>} />
+            <Route
+              path="/checkout"
+              element={<Checkout eventBus={eventBusInit} />}
+            />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
           </Route>
         </Routes>
       </Router>
-      {mountRemoteComponent({ module: 'chat', component: 'Chatbox'})}
+      {mountRemoteComponent({ module: "chat", component: "Chatbox" })}
     </LogtoProvider>
   );
 }

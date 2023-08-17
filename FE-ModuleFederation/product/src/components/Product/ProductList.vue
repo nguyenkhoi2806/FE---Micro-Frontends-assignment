@@ -6,15 +6,9 @@
         :key="item.id"
         :class="[column === 4 ? 'col-lg-3 col-md-4 col-sm-6' : 'col-lg-4 col-md-6 col-sm-6']"
       >
-        <ProductCard :item="item"/>
+        <ProductCard :item="item" :event-bus="eventBus" />
       </div>
     </div>
-    <!-- <div class="product__pagination">
-      <a href="#">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-    </div> -->
   </div>
 </template>
 <script lang="ts">
@@ -28,7 +22,8 @@ export default defineComponent({
   components: { ProductCard },
   props: {
     data: Array as PropType<IProduct[]>,
-    column: Number
+    column: Number,
+    eventBus: {} as any,
   },
 });
 </script>
