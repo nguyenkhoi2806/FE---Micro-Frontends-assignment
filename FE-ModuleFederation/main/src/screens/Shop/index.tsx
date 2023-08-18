@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const Shop = ({ eventBus }: any) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
   return mountRemoteComponent({
     module: "product",
     component: "ProductView",
@@ -11,6 +12,7 @@ const Shop = ({ eventBus }: any) => {
       navigate,
       searchParams: {
         categoryId: Number(searchParams.get("category")),
+        name: searchParams.get("name") ? searchParams.get("name") : null,
       },
       eventBus,
     },

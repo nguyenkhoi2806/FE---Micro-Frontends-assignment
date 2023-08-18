@@ -8,7 +8,6 @@ import styles from "./Header.module.scss";
 import Nav from "./Nav";
 
 const Header = ({ eventBus }: any) => {
-  const user = globalStorage.getToken();
   const navigate = useNavigate();
   const token = globalStorage.getToken();
 

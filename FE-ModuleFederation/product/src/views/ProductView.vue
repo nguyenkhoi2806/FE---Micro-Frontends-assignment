@@ -73,12 +73,28 @@ export default defineComponent({
   methods: {
     async getAllProducts() {
       const { data } = await API.getReviewedProducts({ limit: 100 });
-      this.items = data.product;
+      if (this.searchParams?.name) {
+        const productName = this.searchParams?.name;
+        this.items = data.product.filter((el: IProduct) =>
+          el.name.toLowerCase().includes(productName.toLowerCase())
+        );
+      } else {
+        this.items = data.product;
+      }
+
       this.saleItems = data.product.filter((el: IProduct) => el.discount);
     },
     async getProductsByCategory(id: IProduct["id"]) {
       const { data } = await API.getProductsByCategory(id);
-      this.items = data.category?.[0]?.products;
+      const products = data.category?.[0]?.products;
+      if (this.searchParams?.name) {
+        const productName = this.searchParams?.name;
+        this.items = products.filter((el: IProduct) =>
+          el.name.toLowerCase().includes(productName.toLowerCase())
+        );
+      } else {
+        this.items = products;
+      }
     },
   },
 });
