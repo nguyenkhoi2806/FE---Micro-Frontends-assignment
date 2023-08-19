@@ -9,5 +9,13 @@
 
 ## How to run api quickly
 
-- First you run command `sh start-service.sh` to start service
-- After that yoy run command `sh migrate-data.sh` to migrate data
+- First you run command `sh script/start-api.sh` to start service
+- After that yoy run command `sh script/migrate-data.sh` to migrate data
+
+---
+
+**NOTE**
+
+To stop sevvice you can run command `sh script/stop-api.sh`
+
+---
