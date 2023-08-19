@@ -19,3 +19,20 @@
 To stop sevvice you can run command `sh script/stop-api.sh`
 
 ---
+
+## How to run front end quickly
+
+---
+
+**NOTE**
+
+- Each terminal you can only run **one service**
+
+---
+
+- Run `sh main.sh` to start main service
+- Run `sh blog.sh` to start blog service
+- Run `sh checkout.sh` to start checkout service
+- Run `sh product.sh` to start product service
+- Run `sh shared.sh` to start shared service
+- Run `sh chat.sh` to start chat service
