@@ -18,6 +18,7 @@ export interface ICartData {
 
 interface IGlobalStorage {
   getCartData(): ICartData | null;
+  getFavoriteList(): { items: IItemCart[] };
   addItemToCart(item: IItemCart): void;
   addItemToFavoriteList(item: IItemCart): void;
   checkItemInFavoriteListExist(item: IItemCart): boolean;

@@ -79,9 +79,14 @@ const Header = ({ eventBus }: any) => {
             <div className={styles.header__cart}>
               <ul>
                 <li>
-                  <a href="#">
-                    <i className="fa fa-heart" /> <span>1</span>
-                  </a>
+                  {mountRemoteComponent({
+                    module: "product",
+                    component: "FavoriteIcon",
+                    props: {
+                      navigate,
+                      eventBus,
+                    },
+                  })}
                 </li>
                 <li>
                   {mountRemoteComponent({

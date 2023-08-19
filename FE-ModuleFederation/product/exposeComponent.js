@@ -10,4 +10,5 @@ module.exports = {
   ProductDetailView: "./src/views/mountProductDetailView",
   ProductSmallSlider: "./src/components/Slider/mountProductSmallSlider",
   MenuCategory: "./src/components/Sidebar/mountMenu.tsx",
+  FavoriteIcon: "./src/components/FavoriteIcon/mountFavoriteIcon.ts",
 };
