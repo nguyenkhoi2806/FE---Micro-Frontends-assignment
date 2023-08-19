@@ -39,7 +39,9 @@
               </div>
             </div>
             <span class="primary-btn cursor-pointer" @click="addToCart(item)"> ADD TO CARD </span>
-            <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+            <a @click="addToFavorite(item)" class="heart-icon"
+              ><span class="icon_heart_alt"></span
+            ></a>
             <ul>
               <li>
                 <b>Availability</b>
@@ -110,7 +112,12 @@ import API from "@/api";
 import Image from "@components/Image/index.vue";
 //@ts-ignore
 import { IProduct } from "@components/Product/product.type.ts";
+
+//@ts-ignore
 import globalStorage, { IItemCart } from "@/utils/loadStorage";
+
+//@ts-ignore
+import * as ProductUtil from "@/utils/product";
 
 export default defineComponent({
   name: "ProductDetail",
@@ -185,21 +192,10 @@ export default defineComponent({
       document.body.dispatchEvent(chatDataEvent);
     },
     addToCart(item: any) {
-      const data: IItemCart = {
-        id: item.id,
-        title: item.name,
-        qty: 1,
-        price: item.price,
-        img: item.list_img?.[0].url || require("@/assets/img/default.png"),
-      };
-      globalStorage.addItemToCart(data);
-      this.eventBus.emit("addCartItem");
-      this.eventBus.emit("showMessage", null, {
-        detail: {
-          serverity: "success",
-          message: "Add to cart success",
-        },
-      });
+      return ProductUtil.addToCart(item, this.eventBus);
+    },
+    addToFavorite(item: any) {
+      return ProductUtil.addToFavorite(item, this.eventBus);
     },
   },
 });

@@ -9,10 +9,7 @@
       <div v-if="item.discount" class="product__discount__percent">-{{ item.discount }}%</div>
       <ul class="product__item__pic__hover">
         <li>
-          <a href="#"><i class="fa fa-heart"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fa fa-retweet"></i></a>
+          <a @click="addToFavorite(item)"><i class="fa fa-heart"></i></a>
         </li>
         <li>
           <a @click="addToCart(item)"><i class="fa fa-shopping-cart"></i></a>
@@ -34,7 +31,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import globalStorage, { IItemCart } from "@/utils/loadStorage";
+
+//@ts-ignore
+import * as ProductUtil from "@/utils/product";
 //@ts-ignore
 import { IProduct } from "@components/Product/product.type.ts";
 
@@ -47,21 +46,10 @@ export default defineComponent({
   },
   methods: {
     addToCart(item: any) {
-      const data: IItemCart = {
-        id: item.id,
-        title: item.name,
-        qty: 1,
-        price: item.price,
-        img: item.list_img?.[0].url || require("@/assets/img/default.png"),
-      };
-      globalStorage.addItemToCart(data);
-      this.eventBus.emit("addCartItem");
-      this.eventBus.emit("showMessage", null, {
-        detail: {
-          serverity: "success",
-          message: "Add to cart success",
-        },
-      });
+      return ProductUtil.addToCart(item, this.eventBus);
+    },
+    addToFavorite(item: any) {
+      return ProductUtil.addToFavorite(item, this.eventBus);
     },
   },
 });

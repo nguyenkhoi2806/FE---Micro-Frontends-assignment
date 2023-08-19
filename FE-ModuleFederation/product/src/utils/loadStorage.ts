@@ -19,6 +19,8 @@ export interface ICartData {
 interface IGlobalStorage {
   getCartData(): ICartData | null;
   addItemToCart(item: IItemCart): void;
+  addItemToFavoriteList(item: IItemCart): void;
+  checkItemInFavoriteListExist(item: IItemCart): boolean;
 }
 
 class globalStorageClass {
@@ -42,6 +44,29 @@ class globalStorageClass {
     const data = this.getLocalStorage("mfcart");
     return data ? JSON.parse(data) : null;
   }
+
+  public getFavoriteList() {
+    const data = this.getLocalStorage("mf_favorite");
+    return data ? JSON.parse(data) : null;
+  }
+
+  public addItemToFavoriteList(item: IItemCart) {
+    const currentData = this.getFavoriteList();
+    if (!currentData) {
+      this.setLocalStorage("mf_favorite", { items: [item] });
+    }
+
+    if (currentData && !currentData.items.some((data: IItemCart) => data.id === item.id)) {
+      currentData.items.push(item);
+      this.setLocalStorage("mf_favorite", currentData);
+    }
+  }
+
+  public checkItemInFavoriteListExist(item: IItemCart) {
+    const currentData = this.getFavoriteList();
+    return currentData && currentData.items.some((data: IItemCart) => data.id === item.id);
+  }
+
   public addItemToCart(item: IItemCart) {
     const currentData = this.getCartData();
     const userId = null;
@@ -76,10 +101,10 @@ class globalStorageClass {
     currentData.subTotal += item.qty * item.price;
     currentData.grandTotal = currentData.subTotal;
     currentData.items = currentData.items.concat(item);
-    console.log(currentData);
     return this.setLocalStorage("mfcart", currentData);
   }
 }
 
 const globalStorage: IGlobalStorage = new globalStorageClass();
+
 export default globalStorage;
