@@ -6,6 +6,7 @@
 - Auto redirect to shop page when click menu category
 - Fix Bug cannot go to product detail view
 - Add function search product by name
+- Add wishlist features
 
 ## How to run api quickly
 
