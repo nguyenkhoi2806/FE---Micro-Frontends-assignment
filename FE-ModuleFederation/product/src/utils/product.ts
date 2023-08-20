@@ -1,3 +1,4 @@
+import { IProduct } from "@/components/Product/product.type";
 import globalStorage, { IItemCart } from "@/utils/loadStorage";
 
 function addToCart(item: any, eventBus: any) {
@@ -19,17 +20,9 @@ function addToCart(item: any, eventBus: any) {
 }
 
 function addToFavorite(item: any, eventBus: any) {
-  const data: IItemCart = {
-    id: item.id,
-    title: item.name,
-    qty: 1,
-    price: item.price,
-    img: item.list_img?.[0].url || require("@/assets/img/default.png"),
-  };
-
-  if (!globalStorage.checkItemInFavoriteListExist(data)) {
-    globalStorage.addItemToFavoriteList(data);
-    eventBus.emit("addFovariteItem");
+  if (!globalStorage.checkItemInFavoriteListExist(item)) {
+    globalStorage.addItemToFavoriteList(item);
+    eventBus.emit("updateFovariteItem");
     eventBus.emit("showMessage", null, {
       detail: {
         serverity: "success",
@@ -46,4 +39,17 @@ function addToFavorite(item: any, eventBus: any) {
   }
 }
 
-export { addToCart, addToFavorite };
+function handleRemoveItemFromFavoriteList(item: IProduct, eventBus: any) {
+  if (globalStorage.checkItemInFavoriteListExist(item)) {
+    globalStorage.removeItemFromFavoriteList(item);
+    eventBus.emit("updateFovariteItem");
+    eventBus.emit("showMessage", null, {
+      detail: {
+        serverity: "success",
+        message: "Success! The item has been removed to your wish list",
+      },
+    });
+  }
+}
+
+export { addToCart, addToFavorite, handleRemoveItemFromFavoriteList };

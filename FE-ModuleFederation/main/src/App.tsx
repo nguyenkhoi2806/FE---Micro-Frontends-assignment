@@ -66,7 +66,10 @@ function App() {
             />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
-            <Route path="/wish-list" element={<Wishlist />} />
+            <Route
+              path="/wish-list"
+              element={<Wishlist eventBus={eventBusInit} />}
+            />
           </Route>
         </Routes>
       </Router>

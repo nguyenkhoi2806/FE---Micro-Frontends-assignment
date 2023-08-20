@@ -11,4 +11,5 @@ module.exports = {
   ProductSmallSlider: "./src/components/Slider/mountProductSmallSlider",
   MenuCategory: "./src/components/Sidebar/mountMenu.tsx",
   FavoriteIcon: "./src/components/FavoriteIcon/mountFavoriteIcon.ts",
+  ProductWishList: "./src/components/Product/mountProductWishList.ts",
 };

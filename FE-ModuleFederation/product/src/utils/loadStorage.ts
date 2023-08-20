@@ -1,3 +1,4 @@
+import { IProduct } from "@/components/Product/product.type";
 import _ from "lodash";
 
 export interface IItemCart {
@@ -20,8 +21,9 @@ interface IGlobalStorage {
   getCartData(): ICartData | null;
   getFavoriteList(): { items: IItemCart[] };
   addItemToCart(item: IItemCart): void;
-  addItemToFavoriteList(item: IItemCart): void;
-  checkItemInFavoriteListExist(item: IItemCart): boolean;
+  addItemToFavoriteList(item: any): void;
+  checkItemInFavoriteListExist(item: IProduct): boolean;
+  removeItemFromFavoriteList(item: IProduct): void;
 }
 
 class globalStorageClass {
@@ -51,19 +53,26 @@ class globalStorageClass {
     return data ? JSON.parse(data) : null;
   }
 
-  public addItemToFavoriteList(item: IItemCart) {
+  public addItemToFavoriteList(item: any) {
     const currentData = this.getFavoriteList();
     if (!currentData) {
       this.setLocalStorage("mf_favorite", { items: [item] });
     }
 
-    if (currentData && !currentData.items.some((data: IItemCart) => data.id === item.id)) {
+    if (currentData && !currentData.items.some((data: any) => data.id === item.id)) {
       currentData.items.push(item);
       this.setLocalStorage("mf_favorite", currentData);
     }
   }
 
-  public checkItemInFavoriteListExist(item: IItemCart) {
+  public removeItemFromFavoriteList(item: IProduct) {
+    const currentData = this.getFavoriteList();
+    currentData.items = currentData.items.filter((dataItem: any) => dataItem.id !== item.id);
+    console.log(currentData.items);
+    this.setLocalStorage("mf_favorite", currentData);
+  }
+
+  public checkItemInFavoriteListExist(item: IProduct) {
     const currentData = this.getFavoriteList();
     return currentData && currentData.items.some((data: IItemCart) => data.id === item.id);
   }

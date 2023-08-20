@@ -25,20 +25,24 @@ export default defineComponent({
   },
   mounted() {
     if (this.eventBus) {
-      this.eventBus.on("addFovariteItem", () => {
-        const wishlist = globalStorage.getFavoriteList();
-        if (wishlist && wishlist.items) {
-          totalWishlist.value = wishlist.items.length;
-        }
-        return {
-          totalWishlist,
-        };
+      this.eventBus.on("updateFovariteItem", () => {
+        this.loadTotalItem();
       });
     }
   },
   methods: {
     navigateToWishList() {
       this.navigate("/wish-list");
+    },
+
+    loadTotalItem() {
+      const wishlist = globalStorage.getFavoriteList();
+      if (wishlist && wishlist.items) {
+        totalWishlist.value = wishlist.items.length;
+      }
+      return {
+        totalWishlist,
+      };
     },
   },
 });

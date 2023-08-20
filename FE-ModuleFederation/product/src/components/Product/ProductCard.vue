@@ -8,11 +8,16 @@
     >
       <div v-if="item.discount" class="product__discount__percent">-{{ item.discount }}%</div>
       <ul class="product__item__pic__hover">
-        <li>
+        <li v-if="!isFavorite">
           <a @click="addToFavorite(item)"><i class="fa fa-heart"></i></a>
         </li>
         <li>
           <a @click="addToCart(item)"><i class="fa fa-shopping-cart"></i></a>
+        </li>
+        <li v-if="removeItemWishList">
+          <a @click="removeItemWishList(item)">
+            <i class="fa fa-remove"></i>
+          </a>
         </li>
       </ul>
     </div>
@@ -43,6 +48,11 @@ export default defineComponent({
   props: {
     item: IProduct,
     eventBus: {} as any,
+    isFavorite: { type: Boolean, required: false },
+    removeItemWishList: {
+      type: Function,
+      required: false,
+    },
   },
   methods: {
     addToCart(item: any) {

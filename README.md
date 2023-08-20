@@ -1,6 +1,6 @@
 # FE---Micro-Frontends
 
-## Features complete
+## Tasks complete
 
 - Update qunatity to cart icon and show message when add product
 - Auto redirect to shop page when click menu category
