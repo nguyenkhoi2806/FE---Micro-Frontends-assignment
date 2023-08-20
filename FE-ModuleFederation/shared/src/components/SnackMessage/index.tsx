@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createMountComponent } from "../../utils/mountComponent";
 import "./SnackMessage.scss";
-import { createPortal } from 'react-dom';
+import { createPortal } from "react-dom";
 
 const SnackMessage = (props: any) => {
   const [serverity, setServerity] = useState("success");
   const [content, setContent] = useState<any>("");
   const portalRoot: any = document.getElementById("snackbar-message");
-  const snackMessageContainer =  document.createElement("div");
+  const snackMessageContainer = document.createElement("div");
   useEffect(() => {
     snackMessageContainer.append(content);
     portalRoot && portalRoot.appendChild(snackMessageContainer);
     props.eventBus.on("showMessage", (e: any) => {
-      showMessage(e.detail.serverity, e.detail.message)}
-    );
+      showMessage(e.detail.serverity, e.detail.message);
+    });
     return () => {
-      props.eventBus.detach('showMessage');
+      props.eventBus.detach("showMessage");
       snackMessageContainer.remove();
     };
   }, [content, serverity]);
@@ -27,11 +27,15 @@ const SnackMessage = (props: any) => {
     if (snackbar) {
       snackbar.className = `show ${serverity}`;
       setTimeout(function () {
-        snackbar.className = snackbar.className.replace(`show ${serverity}`, "");
-      }, 10000);
+        snackbar.className = snackbar.className.replace(
+          `show ${serverity}`,
+          ""
+        );
+      }, 3000);
     }
   };
   return createPortal(showMessage, portalRoot);
-}
+};
 
-export default (el: any, props: any) => createMountComponent(SnackMessage, props, el);
+export default (el: any, props: any) =>
+  createMountComponent(SnackMessage, props, el);
